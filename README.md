@@ -20,7 +20,7 @@ numpy
 imutils
 opencv-python (v3.4.5.20)
 ```
-Install (Tesseract-OCR)[https://github.com/tesseract-ocr/tesseract/wiki] (follow the instructions for Windows). 
+Install [Tesseract-OCR](https://github.com/tesseract-ocr/tesseract/wiki) (follow the instructions for Windows). 
 
 Copy the installation directory for Tesseract (usually `C:\Program Files (x86)\Tesseract-OCR`) and add the installation directory as a `PATH` variable.
 
