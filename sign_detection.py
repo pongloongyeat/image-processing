@@ -47,4 +47,4 @@ def detect_sign(img_path, chosen_dir):
     return directories[i]
 
 
-detect_sign('images/test4.jpg', 'TOILET')
+# detect_sign('images/test4.jpg', 'TOILET')
