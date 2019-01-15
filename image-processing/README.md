@@ -7,10 +7,8 @@ Image processing codes for a robot that navigates the blind. The codes here work
 To get started, clone a copy of this project (/image-processing/) onto your working environment. Then, download the required prerequisites.
 
 ### Prerequisites
-```
-* [Python 2.7](https://www.python.org/) - 2.7.9 and above
+* [Python 2.7.9 and above](https://www.python.org/downloads/) - 2.7.9 and above
 * [Tesseract-OCR](https://github.com/tesseract-ocr/tesseract) - 4.0.x (Windows)
-```
 
 ### Installation (Windows)
 
