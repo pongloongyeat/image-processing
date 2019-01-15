@@ -15,6 +15,7 @@ ratio=1
 from text_recognition import read_text
 
 
+
 def extractDir(oneArrow):
     # input: oneArrow: single arrow image
     # output: out: direction of the arrow
@@ -136,33 +137,32 @@ def separate_sign(image,w,h,n):
     # h = height of image
     # n = number of column
     # Outputs
-    # img = an array of all the signs images
+    # img = an array of direction of the signs in order
     ##Debugging also
     #count =0
     N = h // n
 
-    img = []
+    dir_array = []
 
     for y in range(0, h, N):
 
         tiles = image[y:y + N, 0:w]
         if tiles.shape[0]>5:
-            img.append(tiles)
+            dir_array.append(extractDir(tiles))
         ## For debugging only where it will produce the png files
         #     cv2.imwrite("save/" + "sign" + str(count) + ".png", tiles)
         # count += 1
-    return img
+    return dir_array
+
+# Used for debugging
 
 src_path = "D:/Documents/Dog Robot Project/navigation/pic/"
 img_path = src_path + "warped.png"
 
 img = cv2.imread(img_path)
-#threshold = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY, 11, 2)
-th1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
 height, width = img.shape[:2]
-#colSegmentation(th1, width, height)
-sign_pic,image_pic = cut_sign(img,width,height)
-sign_img = separate_sign(sign_pic,width,height,4)
-print(read_text("col_sign.png"))
-out = extractDir(sign_img[1])
-print(out)
+sign_pic,word_pic = cut_sign(img,width,height)
+
+sign_dir = separate_sign(sign_pic,width,height,4)
+#print(read_text("col_sign.png"))
+print(sign_dir)
