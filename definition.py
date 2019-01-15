@@ -1,19 +1,12 @@
-#Autonomous indoor navigation robot
-#Created by: Ricky sutopo
-#Imported by: Calvin
-#Date modified: 1/10/2018
-
-
-
+# Written by: Ricky Sutopo, Calvin Low
+# Last modified: 15/1/2019
+# Dependencies: -
 
 from __future__ import division
 import cv2
 import numpy as np
-import time
-from matplotlib import pyplot as plt
-ratio=1
-from text_recognition import read_text
 
+ratio = 1
 
 
 def extractDir(oneArrow):
@@ -30,25 +23,13 @@ def extractDir(oneArrow):
     cntM = cnts[0]
     M = cv2.moments(cntM)
 
-    ##    for c in cnts:
-    ##        peri = cv2.arcLength(c, True)
-    ##        approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-    ##        if len(approx) == 7 or len(approx) == 9:
-    ##            outCnt = approx
-    ##            break
-    ##    print len(approx)
-    ##    if len(approx) == 7:
-    ##        points = outCnt.reshape(7,2)
-    ##    elif len(approx) == 9:
-    ##        points = outCnt.reshape(9,2)
-
     for c in cnts:
         peri = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.02 * peri, True)
         if len(approx) > 5:
             outCnt = approx
             break
-    ##    print len(approx)
+    #    print len(approx)
     points = outCnt.reshape(len(approx), 2)
 
     x = points[:, 0]
@@ -57,7 +38,7 @@ def extractDir(oneArrow):
     xmax = x[np.argmax(x)]
     ymin = y[np.argmin(y)]
     ymax = y[np.argmax(y)]
-    focus = oneArrow[ymin:ymax, xmin:xmax]
+    # focus = oneArrow[ymin:ymax, xmin:xmax]
 
     # Find the centroid of the contour
     cx = int(M['m10'] / M['m00']) - xmin
@@ -66,21 +47,22 @@ def extractDir(oneArrow):
     arrowX = xmax - xmin
     arrowY = ymax - ymin
     # Un-comment to draw the contours, centroid on the arrow
-    ##    dot = cv2.line(focus,(0,0),(arrowX,arrowY),(0,0,255),3)
-    ##    dot = cv2.line(focus,(arrowX,0),(0,arrowY),(0,0,255),3)
-    ##    dot = cv2.line(focus,(cx,cy),(cx,cy),(255,0,0),3)
-    ##    cv2.imshow("Final",dot)
+    #    dot = cv2.line(focus,(0,0),(arrowX,arrowY),(0,0,255),3)
+    #    dot = cv2.line(focus,(arrowX,0),(0,arrowY),(0,0,255),3)
+    #    dot = cv2.line(focus,(cx,cy),(cx,cy),(255,0,0),3)
+    #    cv2.imshow("Final",dot)
 
     # Check the direction of the arrow
-    if (isInside(0, 0, int(arrowX / 2), int(arrowY / 2), 0, arrowY, cx, cy)):
+    if isInside(0, 0, int(arrowX / 2), int(arrowY / 2), 0, arrowY, cx, cy):
         out = 'Left'
-    elif (isInside(0, 0, int(arrowX / 2), int(arrowY / 2), arrowX, 0, cx, cy)):
+    elif isInside(0, 0, int(arrowX / 2), int(arrowY / 2), arrowX, 0, cx, cy):
         out = 'Up'
-    elif (isInside(arrowX, 0, int(arrowX / 2), int(arrowY / 2), arrowX, arrowY, cx, cy)):
+    elif isInside(arrowX, 0, int(arrowX / 2), int(arrowY / 2), arrowX, arrowY, cx, cy):
         out = 'Right'
     else:
         out = 'No arrow'
     return out
+
 
 def isInside(x1, y1, x2, y2, x3, y3, x, y):
     # Check if the centroid at x,y is inside the triangle
@@ -89,48 +71,58 @@ def isInside(x1, y1, x2, y2, x3, y3, x, y):
     A2 = area(x1, y1, x, y, x3, y3)
     A3 = area(x1, y1, x2, y2, x, y)
 
-    if (A == A1 + A2 + A3):
+    if A == A1 + A2 + A3:
         return True
     else:
         return False
+
+
 def area(x1, y1, x2, y2, x3, y3):
     # Find the area of a triangle using 3 coordinate points
-     return abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0)
+    return abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0)
 
-# Can be deleted if not needed
-def cutimage(image,w,h):
-    y1 = 0
-    M = h #// 20
-    N = w // 20
 
-    for y in range(0, h, M):
-        for x in range(0, w, N):
-            y1 = y + M
-            x1 = x + N
-            tiles = image[y:y + M, x:x + N]
+##################################################
+# Description: Cuts signboard image to           #
+#              directory and arrow image data.   #
+# Input:                                         #
+#        @image: List. Image data parsed from    #
+#                cv2.imread.                     #
+#        @width: Int. Image width.               #
+#        @height: Int. Image height.             #
+# Output:                                        #
+#        @directories_col: List. Image data      #
+#                          containing only the   #
+#                          directories.          #
+#        @arrow_col: List. Image data containing #
+#                    only the arrows.            #
+# Usage: cut_sign(cv2.imread('img.jpg'), 32, 32) #
+# Expect: Image data cut in half vertically.     #
+##################################################
+def cut_sign(image, width, height):
+    col_div = 120  # width of arrow image to crop
 
-            cv2.rectangle(image, (x, y), (x1, y1), (0, 255, 0))
-            cv2.imwrite("save/" + str(x) + '_' + str(y) + ".png", tiles)
+    directories_col = image[0:height, 0:width - col_div]
+    arrow_col = image[0:height, width-col_div:width]
+    cv2.imwrite("directories.png", directories_col)
+    cv2.imwrite("arrows.png", arrow_col)
 
-    cv2.imwrite("asas.png", image)
+    return arrow_col, directories_col
 
-def cut_sign(image,w,h):
-    # Inputs
-    # image = RGB image of sign
-    # w = width of image
-    # h = height of image
-    # Outputs
-    # sign_col= image of sign
-    # word_col= image of word
-    col_div = 120 #width of sign image to crop
 
-    sign_col = image[0:h, w-col_div:w]
-    word_col = image[0:h, 0:w-col_div]
-    cv2.imwrite("col_word.png", word_col)
-    cv2.imwrite("col_sign.png", sign_col)
-    return sign_col,word_col
-
-def separate_sign(image,w,h,n):
+##################################################
+# Description:
+# Input:                                         #
+#        @image: List. Image data parsed from    #
+#                cv2.imread.                     #
+#        @width: Int. Image width.               #
+#        @height: Int. Image height.             #
+#        @n: Number of pixel columns to cut.     #
+# Output:                                        #
+#        @dir_array: List. List of lists of      #
+#                    arrow image data.           #
+##################################################
+def separate_sign(image, width, height, n):
     # Inputs
     # image = RGB image of sign
     # w = width of image
@@ -138,31 +130,30 @@ def separate_sign(image,w,h,n):
     # n = number of column
     # Outputs
     # img = an array of direction of the signs in order
-    ##Debugging also
-    #count =0
-    N = h // n
+    # Debugging also
+    # count = 0
+    N = height // n
 
     dir_array = []
 
-    for y in range(0, h, N):
+    for y in range(0, height, N):
 
-        tiles = image[y:y + N, 0:w]
-        if tiles.shape[0]>5:
+        tiles = image[y:y + N, 0:width]
+        if tiles.shape[0] > 5:
             dir_array.append(extractDir(tiles))
-        ## For debugging only where it will produce the png files
+        # For debugging only where it will produce the png files
         #     cv2.imwrite("save/" + "sign" + str(count) + ".png", tiles)
         # count += 1
     return dir_array
 
-# Used for debugging
 
-src_path = "D:/Documents/Dog Robot Project/navigation/pic/"
-img_path = src_path + "warped.png"
-
-img = cv2.imread(img_path)
-height, width = img.shape[:2]
-sign_pic,word_pic = cut_sign(img,width,height)
-
-sign_dir = separate_sign(sign_pic,width,height,4)
-#print(read_text("col_sign.png"))
-print(sign_dir)
+# src_path = "D:/Documents/Dog Robot Project/navigation/pic/"
+# img_path = src_path + "warped.png"
+#
+# img = cv2.imread(img_path)
+# height, width = img.shape[:2]
+# sign_pic, word_pic = cut_sign(img, width, height)
+#
+# sign_dir = separate_sign(sign_pic, width, height, 4)
+# print(read_text("col_sign.png"))
+# print(sign_dir)
