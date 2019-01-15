@@ -69,4 +69,3 @@ And we're done!
 
 * Pong Loong Yeat
 * Calvin Low Fu Yuan
-* Claire Jewel Wong Mae Mae
