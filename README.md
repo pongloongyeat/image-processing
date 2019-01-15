@@ -73,6 +73,7 @@ And we're done!
 
 ## Contributors
 
+* Ricky Sutopo (Started this project in Y17/18)
 * Pong Loong Yeat
 * Calvin Low Fu Yuan
 * Claire Jewel Wong Mae Mae
