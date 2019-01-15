@@ -24,11 +24,11 @@ def read_text(img_path=""):
 
     # Check if img_name is str and exists
     if img_path == "":
-        print("Error (read_text): Image filename not specified!")
+        print("Error (read_text): @img_path not specified!")
         return
 
     if not isinstance(img_path, str):
-        print("Error (read_text): img_name is not of type str!")
+        print("Error (read_text): @img_name is not of type str!")
         return
 
     start = time.time()
