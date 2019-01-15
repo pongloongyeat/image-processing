@@ -17,7 +17,7 @@ Open the image-processing folder as a PyCharm project (or with your equivelant I
 ```
 numpy
 imutils
-opencv-python - 3.4.5.20
+opencv-python (v3.4.5.20)
 ```
 Then, install (Tesseract-OCR)[https://github.com/tesseract-ocr/tesseract/wiki](follow the instructions for Windows). Copy the installation directory for Tesseract (usually C:\Program Files (x86)\Tesseract-OCR). Click on the Windows search menu and type `path`. Select `Edit the system environment variables`. Then, click on `Environment Variables...` and double click on `Path` under System variables. Click on New and paste the directory in.
 
