@@ -1,3 +1,7 @@
+# Written by: Pong Loong Yeat
+# Last modified: 15/1/2019
+# Dependencies: -
+
 import cv2
 import numpy as np
 
