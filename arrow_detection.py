@@ -100,7 +100,7 @@ def area(x1, y1, x2, y2, x3, y3):
 # Expect: Image data cut in half vertically.     #
 ##################################################
 def cut_sign(image, width, height):
-    col_div = 120  # width of arrow image to crop
+    col_div = 12/100 * width  # width of arrow image to crop
 
     directories_col = image[0:height, 0:width - col_div]
     arrow_col = image[0:height, width-col_div:width]
@@ -146,7 +146,7 @@ def separate_sign(image, width, height, n):
         # count += 1
     return dir_array
 
-
+# For debugging purposes
 # src_path = "D:/Documents/Dog Robot Project/navigation/pic/"
 # img_path = src_path + "warped.png"
 #
