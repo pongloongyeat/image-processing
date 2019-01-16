@@ -60,14 +60,14 @@ def process_directories(img_path, chosen_dir):
     end = time.time()
     print("[INFO] process took {:.6f} seconds".format(end - start))
 
-    return i
+    return i, len(directories)
 
-def process_arrow(img_arrow, i):
+def process_arrow(img_arrow, i, row):
 
     start = time.time()
 
     height, width = img_arrow.shape[:2]
-    arrow_dir = separate_sign(img_arrow, width, height, 4)
+    arrow_dir = separate_sign(img_arrow, width, height, row)
 
     end = time.time()
     print("[INFO] process took {:.6f} seconds".format(end - start))
@@ -76,7 +76,7 @@ def process_arrow(img_arrow, i):
 
 src_path = "C:/Users/clair/Downloads/Summer Project/personal-projects/image-processing/images/"
 arrow_image, directories = detect_sign(src_path + "test4.jpg")
-index = process_directories("directories.png","LAB")
+index,row = process_directories("directories.png","LAB")
 arrow_direction = process_arrow(arrow_image,index)
 
 print(arrow_direction)
