@@ -28,13 +28,13 @@ Finally, install the `pytesseract` package and you're set.
 
 ### Installation (Raspbian)
 
-Check and ensure Python and Pip is installed on your Raspbian OS (should be pre-installed by default) If using a used Raspberry Pi (that we may have worked on), check if OpenCV 3.4.5.x is already installed by opening up the terminal and entering the following:
+Check and ensure Python and Pip is installed on your Raspbian OS (should be pre-installed by default). If using a used Raspberry Pi (that we may have worked on), check if OpenCV 3.4.5.x is already installed by opening up the terminal and entering the following:
 ```
 python
 import cv2
 cv2.__version__
 ```
-If there are no errors and it returns a version later than `3.4.5`, then OpenCV 3.4.5 is already installed on your Pi and you make skip the OpenCV installation steps.
+If there are no errors and it returns a version later than `3.4.5`, then OpenCV 3.4.5 is already installed on your Pi and you may skip the OpenCV installation steps.
 
 Otherwise, open up the terminal and enter the following:
 ```
