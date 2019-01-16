@@ -79,5 +79,5 @@ def detect_rect(img):
     end = time.time()
     print("[INFO] rectangular recognition took {:.6f} seconds".format(end - start))
 
-    return
+    return warped
 
