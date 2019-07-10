@@ -126,9 +126,8 @@ def recentre():
 
 
 ##################################################
-# Description: Connects to an application on a   #
-#              device via Bluetooth to select    #
-#              directory.                        #
+# Description: Execute signboard detection as    #
+#			   robot encounter two possible path #
 # Input: -                                       #
 # Return: -                                      #
 ##################################################
@@ -153,8 +152,8 @@ def junction():
 
 
 ##################################################
-# Description: Allows vehicle to turn in a       #
-#              certain direction.                #
+# Description: Allows vehicle to turn left or    #
+#              right.		                 #
 # Input:                                         #
 #        @direction: Str. String containing      #
 #                    direction vehicle needs to  #
